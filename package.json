@@ -1,0 +1,26 @@
+{
+  "name": "react-calendars",
+  "version": "0.0.0",
+  "description": "A react calendar and datepicker library",
+  "main": "dist/index.js",
+  "repository": "git@github.com:jeremiedubuis/react-calendars.git",
+  "author": "Jérémie Dubuis <jeremie.dubuis@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "rollup": "^1.31.1",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-serve": "^1.0.1"
+  }
+}
