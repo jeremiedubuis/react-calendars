@@ -23,9 +23,13 @@ class Month extends React.Component {
         && this.props.month === date.getMonth()
         && day === date.getDate();
 
+    isToday = (day) =>
+        this.isDay(new Date(), day);
+
     getDayClass(day) {
         const c = [`${libClassName}-day`];
         if (this.props.selectedDay && this.isDay(this.props.selectedDay, day)) c.push('is-selected');
+        if (this.isToday(day)) c.push('is-today');
         const dateClass = this.props.dateClasses.find(([date]) => this.isDay(date, day));
         if (dateClass) c.push(dateClass[1]);
         return c.join(' ');
