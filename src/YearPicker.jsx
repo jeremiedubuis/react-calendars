@@ -1,16 +1,16 @@
 import React from 'react';
-import {libClassName} from './helpers/configuration';
+import {libClassName, nextButton, previousButton} from './helpers/configuration';
 
 class YearPicker extends React.Component {
 
     render() {
         return <div className={`${libClassName}-year-picker`}>
             <button className="previous-button" type="button" onClick={this.onClickPrevious}>
-                Previous
+                {previousButton}
             </button>
             {this.props.year}
             <button className="next-button" type="button" onClick={this.onClickNext}>
-                Next
+                {nextButton}
             </button>
         </div>
     }
