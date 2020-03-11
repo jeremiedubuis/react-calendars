@@ -70,9 +70,13 @@ class DatePicker extends React.Component {
                 document.getElementsByTagName('body')[0]
             );
     }
+    
+    onFocus = () => this.setState({displayCalendar: true}, () => {
+        if (typeof this.props.onFocus === 'function') this.props.onFocus(e);
+    });
 
-    onFocus = () => this.setState({displayCalendar: true});
     close = () => this.setState({displayCalendar: false});
+
     onChange = (e) => {
         const state = {
             value: e.target.value,
@@ -83,7 +87,9 @@ class DatePicker extends React.Component {
             state.month = selectedDay.getMonth();
             state.year = selectedDay.getFullYear();
         }
-        this.setState(state)
+        this.setState(state, () => {
+            if (typeof this.props.onChange === 'function') this.props.onChange(e);
+        });
     };
     onDateSelection = (e, date, previousDate) => {
         this.setState({
