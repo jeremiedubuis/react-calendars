@@ -16,7 +16,7 @@ class DatePicker extends React.Component {
         };
 
         this.calendarRef = React.createRef();
-        this.inputRef = props.inputRef || React.createRef();
+        this.inputRef = React.createRef();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -36,6 +36,8 @@ class DatePicker extends React.Component {
             visibleMonths,
             displayDayTitles,
             displayMonthPicker,
+            displayYearPicker,
+            renderMonthTitle,
             month,
             year,
             onSelect,
