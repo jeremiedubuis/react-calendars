@@ -42,7 +42,6 @@ class DatePicker extends React.Component {
             year,
             onSelect,
             valueToDate,
-            inputRef,
             ...rest
         } = this.props;
         return <>
