@@ -112,8 +112,6 @@ setConfiguration({
          'October',
          'November',
          'December'
-    ],
-    previousButton: 'Previous', // Inner of previous button on YearPicker and MonthPicker
-    nextButton: 'Next' // Inner of next button on YearPicker and MonthPicker
+    ]
 });
 ```
