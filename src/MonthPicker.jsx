@@ -8,7 +8,9 @@ class MonthPicker extends React.Component {
             <button className="previous-button" type="button" onClick={this.onClickPrevious}>
                 {previousButton}
             </button>
-            {monthsTitles[this.props.month]}
+            {this.props.renderMonthTitle
+                ? this.props.renderMonthTitle(monthsTitles[this.props.month], this.props.year)
+                : monthsTitles[this.props.month]}
             <button className="next-button" type="button" onClick={this.onClickNext}>
                 {nextButton}
             </button>

@@ -33,6 +33,7 @@ class Calendar extends React.Component {
 
             { this.props.displayMonthPicker && <MonthPicker
                 month={this.state.month}
+                renderMonthTitle={this.props.renderMonthTitle}
                 setMonth={this.setMonth}
                 setYear={this.setYear}
                 year={this.state.year} />}

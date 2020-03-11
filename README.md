@@ -42,6 +42,11 @@ Will display the month name over each visible month in calendar
 #### displayYearPicker (bool)
 If true will display current year with previous and next buttons
 
+#### renderMonthTitle (function)
+This function can be used to override the way the month title is rendered, 
+it takes two arguments : month (as defined in configuration) and year and 
+should return a React node
+
 #### selectedDay (Date)
 Preselected date (will change when user clicks on date)
 

@@ -63,6 +63,7 @@ class DatePicker extends React.Component {
                     month={this.state.month}
                     year={this.state.year}
                     onSelect={this.onDateSelection}
+                    renderMonthTitle={this.props.renderMonthTitle}
                     dataClasses={this.props.dataClasses}
                     after={<button type="button" onClick={this.close} className="close-button">Close</button>}/>,
                 document.getElementsByTagName('body')[0]
