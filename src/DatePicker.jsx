@@ -60,6 +60,7 @@ class DatePicker extends React.Component {
                     visibleMonths={this.props.visibleMonths}
                     displayDayTitles={this.props.displayDayTitles}
                     displayMonthPicker={this.props.displayMonthPicker}
+                    displayYearPicker={this.props.displayYearPicker}
                     month={this.state.month}
                     year={this.state.year}
                     onSelect={this.onDateSelection}
