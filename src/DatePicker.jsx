@@ -36,10 +36,12 @@ class DatePicker extends React.Component {
             visibleMonths,
             displayDayTitles,
             displayMonthPicker,
+            displayYearPicker,
             month,
-            year,
             onSelect,
+            renderMonthTitle,
             valueToDate,
+            year,
             ...rest
         } = this.props;
         return <>
