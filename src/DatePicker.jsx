@@ -70,8 +70,8 @@ class DatePicker extends React.Component {
                 document.getElementsByTagName('body')[0]
             );
     }
-    
-    onFocus = () => this.setState({displayCalendar: true}, () => {
+
+    onFocus = (e) => this.setState({displayCalendar: true}, () => {
         if (typeof this.props.onFocus === 'function') this.props.onFocus(e);
     });
 
