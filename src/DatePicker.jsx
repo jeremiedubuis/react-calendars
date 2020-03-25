@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {libClassName} from './helpers/configuration';
 import Calendar from './Calendar';
+import parentHasClass from './helpers/parentHasClass';
 
 class DatePicker extends React.Component {
 
@@ -19,12 +20,23 @@ class DatePicker extends React.Component {
         this.inputRef = React.createRef();
     }
 
+    componentDidMount() {
+        document.addEventListener('mousedown', this.onClickOutside);
+        document.addEventListener('focus', this.onFocusOutside);
+        document.addEventListener('keydown', this.onKeyDown);
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.selectedDay !== this.props.selectedDay)
             this.setState({
                 value: this.props.selectedDay ? this.props.dateToValue(this.props.selectedDay) : '',
                 selectedDay: this.props.selectedDay
             });
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.onClickOutside);
+        document.removeEventListener('focus', this.onFocusOutside);
     }
 
     render() {
@@ -46,7 +58,7 @@ class DatePicker extends React.Component {
         } = this.props;
         return <>
             <input ref={this.inputRef} className={`${libClassName}-date-picker ${this.props.className || ''}`} {...rest}
-                   value={this.state.value} onFocus={this.onFocus} onChange={this.onChange}/>
+                   value={this.state.value} onFocus={this.onFocus} onChange={this.onChange} onClick={this.onClick}/>
             {this.renderCalendar()}
         </>;
     }
@@ -72,6 +84,10 @@ class DatePicker extends React.Component {
                 document.getElementsByTagName('body')[0]
             );
     }
+
+    onClick = (e) => this.setState({displayCalendar: true}, () => {
+        if (typeof this.props.onClick === 'function') this.props.onClick(e);
+    });
 
     onFocus = (e) => this.setState({displayCalendar: true}, () => {
         if (typeof this.props.onFocus === 'function') this.props.onFocus(e);
@@ -114,6 +130,31 @@ class DatePicker extends React.Component {
         }
 
         return style;
+    }
+
+    onClickOutside = (e) => {
+        if (e.button <= 1) {
+            if (this.inputRef.current.contains(e.target) && !this.calendarRef || !this.calendarRef.current || !this.calendarRef.current.contains(e.target)) {
+                if (!this.targetHasExcludedClass(e.target)) {
+                    this.close();
+                }
+            }
+        }
+    };
+
+    onFocusOutside = (e) => {
+        if (this.inputRef.current.contains(e.target) && !this.calendarRef.current || !this.calendarRef.current.contains(e.target)) {
+            this.close();
+        }
+    };
+
+    onKeyDown = (e) => {
+        if (e.key === "Escape") this.close();
+    };
+
+    targetHasExcludedClass(target, excludedClasses = []) {
+        if (!excludedClasses.length) return false;
+        return parentHasClass(target, ...excludedClasses);
     }
 
 }
