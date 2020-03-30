@@ -15,10 +15,10 @@
 <script src="index.js"></script>
 <script>
     ReactDOM.render(React.createElement(ReactCalendars.Calendar, {
-        onSelect: function() { console.log(arguments )}
+        onSelect: function() { console.log('select', arguments )}
     }),document.getElementById('ex0'));
     ReactDOM.render(React.createElement(ReactCalendars.DatePicker, {
-        onSelect: function() { console.log(arguments )},
+        onSelect: function() { console.log('select', arguments )},
         direction: 'TOP'
     }),document.getElementById('ex1'));
 </script>

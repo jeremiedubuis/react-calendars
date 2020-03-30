@@ -99,6 +99,7 @@ class DatePicker extends React.Component {
         const state = {
             value: e.target.value,
         };
+        const previousDate = this.state.selectedDay;
         const selectedDay = this.props.valueToDate(e.target.value);
         if (selectedDay instanceof Date && !isNaN(selectedDay) && selectedDay.getFullYear() > 999) {
             state.selectedDay = selectedDay;
@@ -107,6 +108,8 @@ class DatePicker extends React.Component {
         }
         this.setState(state, () => {
             if (typeof this.props.onChange === 'function') this.props.onChange(e);
+            if (state.selectedDay && typeof this.props.onSelect === 'function')
+                this.props.onSelect(e, selectedDay, previousDate);
         });
     };
     onDateSelection = (e, date, previousDate) => {
