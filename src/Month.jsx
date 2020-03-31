@@ -11,8 +11,15 @@ class Month extends React.Component {
 
     static getDerivedStateFromProps(props) {
         const offset = new Date(props.year, props.month, 1).getDay() - firstDay;
+
+        let month = props.month + 1;
+        let year = props.year;
+        if (month > 11) {
+            month = 0;
+            year+1;
+        }
         return {
-            numberOfDays: new Date(props.month + 1 > 11 ? props.year + 1 : props.year, props.month + 1 > 11 ? props.month + 1 : 0, 0).getDate(),
+            numberOfDays: new Date( year, month, 0).getDate(),
             offset: offset > 0 ? offset : 7+offset
         }
     }
