@@ -1,7 +1,12 @@
 {
   "name": "react-calendars",
-  "keywords": ["react", "datepicker", "calendar", "date"],
-  "version": "0.3.1",
+  "keywords": [
+    "react",
+    "datepicker",
+    "calendar",
+    "date"
+  ],
+  "version": "1.0.0",
   "description": "A react calendar and datepicker library",
   "main": "dist/index.js",
   "files": [
