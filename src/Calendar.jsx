@@ -31,12 +31,16 @@ class Calendar extends React.Component {
                 setYear={this.setYear}
                 year={this.state.year} />}
 
+            {this.props.displayYearPicker && this.props.afterYearPicker}
+
             { this.props.displayMonthPicker && <MonthPicker
                 month={this.state.month}
                 renderMonthTitle={this.props.renderMonthTitle}
                 setMonth={this.setMonth}
                 setYear={this.setYear}
                 year={this.state.year} />}
+
+            { this.props.displayMonthPicker && this.props.afterMonthPicker }
 
             <ul className={`${libClassName}-months`}>
                 {[...Array(this.props.visibleMonths)].map((_, i) =>

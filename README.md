@@ -59,6 +59,16 @@ Callback that will be called on selected date change with three parameters:
 #### dateClasses (array<array<Date,String>>)
 The dateClasses prop is an array of arrays that contain a Date and string, if the date in the calendar matches the provided date, the class will be applied
 
+#### after (node)
+The after prop allows inserting content after the calendar dates
+
+#### afterYearPicker (node)
+The afterYearPicker prop allows inserting content after the year picker if displayYearPicker is true
+
+#### afterMonthPicker (node)
+The afterMonthPicker prop allows inserting content after the month picker if displayMonthPicker is true
+
+
 ## DatePicker
 ```jsx
 <script>
@@ -70,7 +80,7 @@ import { DatePicker } from 'react-calendars';
 
 ### props
 
-The datepicker uses all the props from the calendar component with an extra optional prop
+The datepicker uses all the props from the calendar component with extra optional props
 
 ### dateToValue (function)
 The function used to translate the selected date to the string in the input field, by default:

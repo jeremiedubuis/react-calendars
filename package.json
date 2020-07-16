@@ -1,8 +1,12 @@
 {
   "name": "react-calendars",
+  "keywords": ["react", "datepicker", "calendar", "date"],
   "version": "0.3.1",
   "description": "A react calendar and datepicker library",
   "main": "dist/index.js",
+  "files": [
+    "dist/index.js"
+  ],
   "repository": "git@github.com:jeremiedubuis/react-calendars.git",
   "author": "Jérémie Dubuis <jeremie.dubuis@gmail.com>",
   "license": "MIT",

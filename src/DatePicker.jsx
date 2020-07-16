@@ -41,6 +41,9 @@ class DatePicker extends React.Component {
 
     render() {
         const {
+            after,
+            afterMonthPicker,
+            afterYearPicker,
             className,
             dataClasses,
             dateToValue,
@@ -80,7 +83,9 @@ class DatePicker extends React.Component {
                     onSelect={this.onDateSelection}
                     renderMonthTitle={this.props.renderMonthTitle}
                     dataClasses={this.props.dataClasses}
-                    after={<button type="button" onClick={this.close} className="close-button">Close</button>}/>,
+                    after={<><button type="button" onClick={this.close} className="close-button">Close</button>{this.props.after}</>}
+                    afterYearPicker={this.props.afterYearPicker}
+                    afterMonthPicker={this.props.afterMonthPicker}/>,
                 document.getElementsByTagName('body')[0]
             );
     }
