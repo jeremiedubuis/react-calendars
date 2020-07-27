@@ -101,6 +101,8 @@ class DatePicker extends React.Component {
     close = () => this.setState({displayCalendar: false});
 
     onChange = (e) => {
+        e.persist();
+
         const state = {
             value: e.target.value,
         };
