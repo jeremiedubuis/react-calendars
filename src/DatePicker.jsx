@@ -110,11 +110,15 @@ class DatePicker extends React.Component {
             state.selectedDay = selectedDay;
             state.month = selectedDay.getMonth();
             state.year = selectedDay.getFullYear();
+        } else {
+            state.selectedDay = undefined;
+            state.month = undefined;
+            state.year = undefined;
         }
         this.setState(state, () => {
-            if (typeof this.props.onChange === 'function') this.props.onChange(e);
+            if (typeof this.props.onChange === 'function') this.props.onChange(e, state.selectedDay, previousDate);
             if (state.selectedDay && typeof this.props.onSelect === 'function')
-                this.props.onSelect(e, selectedDay, previousDate);
+                this.props.onSelect(e, state.selectedDay, previousDate);
         });
     };
     onDateSelection = (e, date, previousDate) => {
