@@ -27,7 +27,7 @@ class DatePicker extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.selectedDay !== this.props.selectedDay)
+        if (prevProps.selectedDay !== this.props.selectedDay || prevProps.dateToValue !== this.props.dateToValue)
             this.setState({
                 value: this.props.selectedDay ? this.props.dateToValue(this.props.selectedDay) : '',
                 selectedDay: this.props.selectedDay
