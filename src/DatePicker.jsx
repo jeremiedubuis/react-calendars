@@ -27,11 +27,17 @@ class DatePicker extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.selectedDay !== this.props.selectedDay || prevProps.dateToValue !== this.props.dateToValue)
-            this.setState({
-                value: this.props.selectedDay ? this.props.dateToValue(this.props.selectedDay) : '',
-                selectedDay: this.props.selectedDay
-            });
+
+        const update = {};
+        if (prevProps.selectedDay !== this.props.selectedDay || prevProps.dateToValue !== this.props.dateToValue) {
+            update.value = this.props.selectedDay ? this.props.dateToValue(this.props.selectedDay) : '';
+            update.selectedDay = this.props.selectedDay;
+        }
+        if (prevProps.year !== this.props.year ) update.year = this.props.year;
+        if (prevProps.month !== this.props.month ) update.month = this.props.month;
+
+        if (Object.keys(update).length) this.setState(update);
+
     }
 
     componentWillUnmount() {
