@@ -68,6 +68,8 @@ The afterYearPicker prop allows inserting content after the year picker if displ
 #### afterMonthPicker (node)
 The afterMonthPicker prop allows inserting content after the month picker if displayMonthPicker is true
 
+#### isDisabledDay (function)
+This function has three arguments (year, month, day) and should return a boolean to enable the disabled attribute on the Day button
 
 ## DatePicker
 ```jsx

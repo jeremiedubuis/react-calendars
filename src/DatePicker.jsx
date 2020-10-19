@@ -70,6 +70,7 @@ class DatePicker extends React.Component {
         if (this.state.displayCalendar)
             return ReactDOM.createPortal(
                 <Calendar
+                    isDisabledDay={this.props.isDisabledDay}
                     reference={this.calendarRef}
                     style={this.getStyle()}
                     className="is-portal"

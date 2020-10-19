@@ -58,6 +58,7 @@ class Month extends React.Component {
                     <li className={this.getDayClass(i - this.state.offset + 1)} key={i}>
                         {i >= this.state.offset &&
                         <MonthDay
+                            isDisabledDay={this.props.isDisabledDay}
                             day={i - this.state.offset + 1}
                             selectDay={this.props.selectDay}
                             selectedDay={this.props.selectedDay}

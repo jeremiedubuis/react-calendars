@@ -46,6 +46,7 @@ class Calendar extends React.Component {
                 {[...Array(this.props.visibleMonths)].map((_, i) =>
                     <li key={i}>
                         <Month
+                            isDisabledDay={this.props.isDisabledDay}
                             dateClasses={this.props.dateClasses}
                             displayMonthTitle={this.props.displayMonthTitle}
                             displayDayTitles={this.props.displayDayTitles}
@@ -81,6 +82,7 @@ class Calendar extends React.Component {
 
 Calendar.defaultProps = {
     dateClasses: [],
+    isDisabledDay: () => false,
     displayDayTitles: true,
     displayMonthPicker: true,
     displayYearPicker: true,

@@ -14,8 +14,13 @@
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 <script src="index.js"></script>
 <script>
+
+    const today = new Date();
+    const disabledDay = [today.getFullYear(), today.getMonth()+1, today.getDate()+1]
+
     ReactDOM.render(React.createElement(ReactCalendars.Calendar, {
-        onSelect: function() { console.log('select', arguments )}
+        onSelect: function() { console.log('select', arguments )},
+        isDisabledDay: function(...yearMonthDay) { return !disabledDay.filter((v, i) => yearMonthDay[i] !== v).length}
     }),document.getElementById('ex0'));
     ReactDOM.render(React.createElement(ReactCalendars.DatePicker, {
         onSelect: function() { console.log('select', arguments )},

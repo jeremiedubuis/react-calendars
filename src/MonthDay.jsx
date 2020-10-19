@@ -3,7 +3,7 @@ import React from 'react';
 class MonthDay extends React.Component {
 
     render() {
-        return <button type="button" onClick={this.onClick}>
+        return <button type="button" disabled={this.props.isDisabledDay(this.props.year, this.props.month+1, this.props.day)} onClick={this.onClick}>
             {this.props.day}
         </button>
 
