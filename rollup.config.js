@@ -1,8 +1,9 @@
-import resolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
+import resolve from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
 import serve from 'rollup-plugin-serve';
-import replace from 'rollup-plugin-replace';
+import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
+import commonjs from '@rollup/plugin-commonjs';
 import pkg from './package.json';
 
 const dev = process.argv.indexOf('-w') > -1;
@@ -12,6 +13,7 @@ const plugins = [
     replace(({
         'process.env.NODE_ENV': JSON.stringify(dev ? 'development' : 'production')
     })),
+    commonjs(),
     resolve({
         extensions: ['.js', '.jsx']
     }),
