@@ -47,6 +47,7 @@ class DatePicker extends React.Component {
             className,
             dataClasses,
             dateToValue,
+            isDisabledDay,
             selectedDay,
             visibleMonths,
             displayDayTitles,
