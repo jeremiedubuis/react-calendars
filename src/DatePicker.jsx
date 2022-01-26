@@ -135,6 +135,8 @@ class DatePicker extends React.Component {
         this.setState({
             displayCalendar: false,
             value: this.props.dateToValue(date),
+            month: date.getMonth(),
+            year: date.getFullYear(),
             selectedDay: date
         }, () => this.props.onSelect(e, date, previousDate));
     };
