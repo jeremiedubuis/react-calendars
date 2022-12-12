@@ -10,7 +10,7 @@ class MonthDay extends React.Component {
     }
 
     onClick = (e) => {
-        const _previousDay = this.props.selectedDay ? new Date(this.props.selectedDay.getTime()) : null;
+        const _previousDay = this.props.selectedDay instanceof Date ? new Date(this.props.selectedDay.getTime()) : null;
         const selectedDay = new Date(this.props.year, this.props.month, this.props.day);
         this.props.selectDay(e, selectedDay, _previousDay);
     };
