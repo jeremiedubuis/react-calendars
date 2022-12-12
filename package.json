@@ -6,7 +6,7 @@
     "calendar",
     "date"
   ],
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A react calendar and datepicker library",
   "main": "dist/index.js",
   "files": [
