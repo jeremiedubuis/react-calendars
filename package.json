@@ -16,8 +16,8 @@
   "module": "./dist/react-calendars.es.js",
   "exports": {
     ".": {
-      "import": "./dist/my-component.es.js",
-      "require": "./dist/my-component.umd.js"
+      "import": "./dist/react-calendars.es.js",
+      "require": "./dist/react-calendars.umd.js"
     }
   },
   "repository": "git@github.com:jeremiedubuis/react-calendars.git",
