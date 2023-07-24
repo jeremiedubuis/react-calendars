@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {libClassName} from './helpers/configuration';
+import { libClassName } from './helpers/configuration';
 import Calendar from './Calendar';
 import parentHasClass from './helpers/parentHasClass';
 
 class DatePicker extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
             displayCalendar: false,
             value: props.selectedDay ? props.dateToValue(props.selectedDay) : '',
             selectedDay: props.selectedDay,
-            month: props.month,
-            year: props.year
+            month: props.month || props.selectedDay?.getMonth(),
+            year: props.year || props.selectedDay?.getFullYear()
         };
 
         this.calendarRef = React.createRef();
@@ -27,17 +26,20 @@ class DatePicker extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-
         const update = {};
-        if (prevProps.selectedDay !== this.props.selectedDay || prevProps.dateToValue !== this.props.dateToValue) {
-            update.value = this.props.selectedDay ? this.props.dateToValue(this.props.selectedDay) : '';
+        if (
+            prevProps.selectedDay !== this.props.selectedDay ||
+            prevProps.dateToValue !== this.props.dateToValue
+        ) {
+            update.value = this.props.selectedDay
+                ? this.props.dateToValue(this.props.selectedDay)
+                : '';
             update.selectedDay = this.props.selectedDay;
         }
-        if (prevProps.year !== this.props.year ) update.year = this.props.year;
-        if (prevProps.month !== this.props.month ) update.month = this.props.month;
+        if (prevProps.year !== this.props.year) update.year = this.props.year;
+        if (prevProps.month !== this.props.month) update.month = this.props.month;
 
         if (Object.keys(update).length) this.setState(update);
-
     }
 
     componentWillUnmount() {
@@ -66,11 +68,20 @@ class DatePicker extends React.Component {
             year,
             ...rest
         } = this.props;
-        return <>
-            <input ref={this.inputRef} className={`${libClassName}-date-picker ${this.props.className || ''}`} {...rest}
-                   value={this.state.value} onFocus={this.onFocus} onChange={this.onChange} onClick={this.onClick}/>
-            {this.renderCalendar()}
-        </>;
+        return (
+            <>
+                <input
+                    ref={this.inputRef}
+                    className={`${libClassName}-date-picker ${this.props.className || ''}`}
+                    {...rest}
+                    value={this.state.value}
+                    onFocus={this.onFocus}
+                    onChange={this.onChange}
+                    onClick={this.onClick}
+                />
+                {this.renderCalendar()}
+            </>
+        );
     }
 
     renderCalendar() {
@@ -91,28 +102,38 @@ class DatePicker extends React.Component {
                     onSelect={this.onDateSelection}
                     renderMonthTitle={this.props.renderMonthTitle}
                     dataClasses={this.props.dataClasses}
-                    after={<><button type="button" onClick={this.close} className="close-button">Close</button>{this.props.after}</>}
+                    after={
+                        <>
+                            <button type="button" onClick={this.close} className="close-button">
+                                Close
+                            </button>
+                            {this.props.after}
+                        </>
+                    }
                     afterYearPicker={this.props.afterYearPicker}
-                    afterMonthPicker={this.props.afterMonthPicker}/>,
+                    afterMonthPicker={this.props.afterMonthPicker}
+                />,
                 document.getElementsByTagName('body')[0]
             );
     }
 
-    onClick = (e) => this.setState({displayCalendar: true}, () => {
-        if (typeof this.props.onClick === 'function') this.props.onClick(e);
-    });
+    onClick = (e) =>
+        this.setState({ displayCalendar: true }, () => {
+            if (typeof this.props.onClick === 'function') this.props.onClick(e);
+        });
 
-    onFocus = (e) => this.setState({displayCalendar: true}, () => {
-        if (typeof this.props.onFocus === 'function') this.props.onFocus(e);
-    });
+    onFocus = (e) =>
+        this.setState({ displayCalendar: true }, () => {
+            if (typeof this.props.onFocus === 'function') this.props.onFocus(e);
+        });
 
-    close = () => this.setState({displayCalendar: false});
+    close = () => this.setState({ displayCalendar: false });
 
     onChange = (e) => {
         e.persist();
 
         const state = {
-            value: e.target.value,
+            value: e.target.value
         };
         const previousDate = this.state.selectedDay;
         const selectedDay = this.props.valueToDate(e.target.value);
@@ -126,31 +147,36 @@ class DatePicker extends React.Component {
             state.year = undefined;
         }
         this.setState(state, () => {
-            if (typeof this.props.onChange === 'function') this.props.onChange(e, state.selectedDay, previousDate);
+            if (typeof this.props.onChange === 'function')
+                this.props.onChange(e, state.selectedDay, previousDate);
             if (state.selectedDay && typeof this.props.onSelect === 'function')
                 this.props.onSelect(e, state.selectedDay, previousDate);
         });
     };
     onDateSelection = (e, date, previousDate) => {
-        this.setState({
-            displayCalendar: false,
-            value: this.props.dateToValue(date),
-            month: date.getMonth(),
-            year: date.getFullYear(),
-            selectedDay: date
-        }, () => this.props.onSelect(e, date, previousDate));
+        this.setState(
+            {
+                displayCalendar: false,
+                value: this.props.dateToValue(date),
+                month: date.getMonth(),
+                year: date.getFullYear(),
+                selectedDay: date
+            },
+            () => this.props.onSelect(e, date, previousDate)
+        );
     };
 
     getStyle() {
-        if (this.props.getStyle) return this.props.getStyle(this.inputRef.current, this.calendarRef.current);
+        if (this.props.getStyle)
+            return this.props.getStyle(this.inputRef.current, this.calendarRef.current);
         const rect = this.inputRef.current.getBoundingClientRect();
         const style = {
             left: `${rect.left}px`
         };
         if (this.props.direction && this.props.direction.toUpperCase() === 'TOP') {
-            style.bottom = document.documentElement.scrollHeight-rect.top;
+            style.bottom = document.documentElement.scrollHeight - rect.top;
         } else {
-            style.top = `${rect.top+rect.height}px`;
+            style.top = `${rect.top + rect.height}px`;
         }
 
         return style;
@@ -158,7 +184,11 @@ class DatePicker extends React.Component {
 
     onClickOutside = (e) => {
         if (e.button <= 1) {
-            if (this.inputRef.current.contains(e.target) && !this.calendarRef || !this.calendarRef.current || !this.calendarRef.current.contains(e.target)) {
+            if (
+                (this.inputRef.current.contains(e.target) && !this.calendarRef) ||
+                !this.calendarRef.current ||
+                !this.calendarRef.current.contains(e.target)
+            ) {
                 if (!this.targetHasExcludedClass(e.target)) {
                     this.close();
                 }
@@ -167,34 +197,38 @@ class DatePicker extends React.Component {
     };
 
     onFocusOutside = (e) => {
-        if (this.inputRef.current.contains(e.target) && !this.calendarRef.current || !this.calendarRef.current.contains(e.target)) {
+        if (
+            (this.inputRef.current.contains(e.target) && !this.calendarRef.current) ||
+            !this.calendarRef.current.contains(e.target)
+        ) {
             this.close();
         }
     };
 
     onKeyDown = (e) => {
-        if (e.key === "Escape") this.close();
+        if (e.key === 'Escape') this.close();
     };
 
     targetHasExcludedClass(target, excludedClasses = []) {
         if (!excludedClasses.length) return false;
         return parentHasClass(target, ...excludedClasses);
     }
-
 }
 
 DatePicker.defaultProps = {
-    dateToValue: date => date.toLocaleDateString(),
-    valueToDate: value => {
-        value = value.split(/[/.,-]/g).map(v => parseInt(v));
-        const testValue = new Date(2020, 0, 25).toLocaleDateString().split(/[/.,-]/g).map(v => parseInt(v));
+    dateToValue: (date) => date.toLocaleDateString(),
+    valueToDate: (value) => {
+        value = value.split(/[/.,-]/g).map((v) => parseInt(v));
+        const testValue = new Date(2020, 0, 25)
+            .toLocaleDateString()
+            .split(/[/.,-]/g)
+            .map((v) => parseInt(v));
         const yearIndex = testValue.indexOf(2020);
         const monthIndex = testValue.indexOf(1);
         const dayIndex = testValue.indexOf(25);
-        return new Date(value[yearIndex], value[monthIndex] - 1, value[dayIndex])
+        return new Date(value[yearIndex], value[monthIndex] - 1, value[dayIndex]);
     },
-    onSelect: () => {
-    },
+    onSelect: () => {}
 };
 
 export default DatePicker;
