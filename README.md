@@ -102,6 +102,9 @@ value => {
     }
 ```
 
+### calendarClassName (string)
+The class name to apply to the calendar loaded in a react portal.
+
 ## Configuration
 
 Global configuration can be changed by calling the setConfiguration method:

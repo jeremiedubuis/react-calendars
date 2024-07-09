@@ -53,6 +53,7 @@ class DatePicker extends React.Component {
             afterMonthPicker,
             afterYearPicker,
             className,
+            calendarClassName,
             dataClasses,
             dateToValue,
             isDisabledDay,
@@ -91,7 +92,7 @@ class DatePicker extends React.Component {
                     isDisabledDay={this.props.isDisabledDay}
                     reference={this.calendarRef}
                     style={this.getStyle()}
-                    className="is-portal"
+                    className={'is-portal'+ (this.props.calendarClassName  ? ' '+this.props.calendarClassName :  '')}
                     selectedDay={this.state.selectedDay}
                     visibleMonths={this.props.visibleMonths}
                     displayDayTitles={this.props.displayDayTitles}
