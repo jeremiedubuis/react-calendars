@@ -28,7 +28,6 @@ class DatePicker extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         const update = {};
         if (
-            prevProps.selectedDay !== this.props.selectedDay ||
             prevProps.dateToValue !== this.props.dateToValue
         ) {
             update.value = this.props.selectedDay
@@ -78,6 +77,7 @@ class DatePicker extends React.Component {
                     value={this.state.value}
                     onFocus={this.onFocus}
                     onChange={this.onChange}
+                    onBlur={this.onBlur}
                     onClick={this.onClick}
                 />
                 {this.renderCalendar()}
@@ -127,6 +127,14 @@ class DatePicker extends React.Component {
         this.setState({ displayCalendar: true }, () => {
             if (typeof this.props.onFocus === 'function') this.props.onFocus(e);
         });
+
+    onBlur = (e) => {
+        if (this.props.selectedDay) {
+            this.setState({
+                value:  this.props.dateToValue(this.props.selectedDay) ,
+            })
+        }
+    }
 
     close = () => this.setState({ displayCalendar: false });
 
