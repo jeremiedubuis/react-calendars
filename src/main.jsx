@@ -11,14 +11,21 @@ function ControlledDatePicker() {
 
     const [date, setDate] = useState(new Date());
 
-    return <DatePicker
-        selectedDay={date}
-        onChange={(e, date) => setDate(date)}
-        onSelect={(e, date) => setDate(date)}
-        afterMonthPicker="ok"
-        displayMonthPicker={true}
-        diretion="TOP"
-    />
+    return <>
+        <button onClick={() => {
+            const d= new Date();
+            d.setDate(d.getDate() + 1);
+            setDate(d)
+        }}>Change date to tomorrow</button>
+        <DatePicker
+            selectedDay={date}
+            onChange={(e, date) => setDate(date)}
+            onSelect={(e, date) => setDate(date)}
+            afterMonthPicker="ok"
+            displayMonthPicker={true}
+            diretion="TOP"
+        />
+    </>
 }
 
 
