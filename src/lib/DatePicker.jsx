@@ -27,9 +27,7 @@ class DatePicker extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const update = {};
-        if (
-            prevProps.dateToValue !== this.props.dateToValue
-        ) {
+        if (prevProps.dateToValue !== this.props.dateToValue) {
             update.value = this.props.selectedDay
                 ? this.props.dateToValue(this.props.selectedDay)
                 : '';
@@ -95,13 +93,16 @@ class DatePicker extends React.Component {
     }
 
     renderCalendar() {
-        if (this.state.displayCalendar)
+        if (this.state.displayCalendar && !this.props.readOnly && !this.props.disabled)
             return ReactDOM.createPortal(
                 <Calendar
                     isDisabledDay={this.props.isDisabledDay}
                     reference={this.calendarRef}
                     style={this.getStyle()}
-                    className={'is-portal'+ (this.props.calendarClassName  ? ' '+this.props.calendarClassName :  '')}
+                    className={
+                        'is-portal' +
+                        (this.props.calendarClassName ? ' ' + this.props.calendarClassName : '')
+                    }
                     selectedDay={this.state.selectedDay}
                     visibleMonths={this.props.visibleMonths}
                     displayDayTitles={this.props.displayDayTitles}
@@ -140,10 +141,10 @@ class DatePicker extends React.Component {
     onBlur = (e) => {
         if (this.props.selectedDay) {
             this.setState({
-                value:  this.props.dateToValue(this.props.selectedDay) ,
-            })
+                value: this.props.dateToValue(this.props.selectedDay)
+            });
         }
-    }
+    };
 
     close = () => this.setState({ displayCalendar: false });
 
