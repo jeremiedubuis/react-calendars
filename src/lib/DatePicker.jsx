@@ -73,6 +73,7 @@ class DatePicker extends React.Component {
             renderMonthTitle,
             valueToDate,
             year,
+            closeOnBlur,
             ...rest
         } = this.props;
         return (
@@ -139,6 +140,9 @@ class DatePicker extends React.Component {
         });
 
     onBlur = (e) => {
+        if (this.props.closeOnBlur) {
+            this.close();
+        }
         if (this.props.selectedDay) {
             this.setState({
                 value: this.props.dateToValue(this.props.selectedDay)
