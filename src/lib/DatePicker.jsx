@@ -74,20 +74,30 @@ class DatePicker extends React.Component {
             valueToDate,
             year,
             closeOnBlur,
+            renderInput,
             ...rest
         } = this.props;
+
+        const props = {
+            ref: this.inputRef,
+            className: `${libClassName}-date-picker ${this.props.className || ''}`,
+            ...rest,
+            onFocus: this.onFocus,
+            onChange: this.onChange,
+            onBlur: this.onBlur,
+            onClick: this.onClick,
+            value: this.state.value
+        };
+
         return (
             <>
-                <input
-                    ref={this.inputRef}
-                    className={`${libClassName}-date-picker ${this.props.className || ''}`}
-                    {...rest}
-                    value={this.state.value}
-                    onFocus={this.onFocus}
-                    onChange={this.onChange}
-                    onBlur={this.onBlur}
-                    onClick={this.onClick}
-                />
+                {renderInput ? (
+                    renderInput({
+                        ...props
+                    })
+                ) : (
+                    <input {...props} />
+                )}
                 {this.renderCalendar()}
             </>
         );
