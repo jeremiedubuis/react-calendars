@@ -21,7 +21,6 @@ class DatePicker extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.onClickOutside);
-        document.addEventListener('focus', this.onFocusOutside);
         document.addEventListener('keydown', this.onKeyDown);
     }
 
@@ -50,7 +49,6 @@ class DatePicker extends React.Component {
 
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.onClickOutside);
-        document.removeEventListener('focus', this.onFocusOutside);
     }
 
     render() {
@@ -73,7 +71,6 @@ class DatePicker extends React.Component {
             renderMonthTitle,
             valueToDate,
             year,
-            closeOnBlur,
             renderInput,
             ...rest
         } = this.props;
@@ -149,18 +146,10 @@ class DatePicker extends React.Component {
             if (typeof this.props.onFocus === 'function') this.props.onFocus(e);
         });
 
-    onBlur = (e) => {
-        if (this.props.closeOnBlur) {
-            this.close();
-        }
-        if (this.props.selectedDay) {
-            this.setState({
-                value: this.props.dateToValue(this.props.selectedDay)
-            });
-        }
+    close = () => {
+        this.inputRef.current?.focus();
+        this.setState({ displayCalendar: false });
     };
-
-    close = () => this.setState({ displayCalendar: false });
 
     onChange = (e) => {
         e.persist();
@@ -187,6 +176,7 @@ class DatePicker extends React.Component {
         });
     };
     onDateSelection = (e, date, previousDate) => {
+        this.inputRef.current?.focus();
         this.setState(
             {
                 displayCalendar: false,
@@ -218,9 +208,9 @@ class DatePicker extends React.Component {
     onClickOutside = (e) => {
         if (e.button <= 1) {
             if (
-                (this.inputRef.current.contains(e.target) && !this.calendarRef) ||
-                !this.calendarRef.current ||
-                !this.calendarRef.current.contains(e.target)
+                this.state.displayCalendar &&
+                !this.inputRef.current?.contains(e.target) &&
+                !this.calendarRef.current?.contains(e.target)
             ) {
                 if (!this.targetHasExcludedClass(e.target)) {
                     this.close();
@@ -229,17 +219,44 @@ class DatePicker extends React.Component {
         }
     };
 
-    onFocusOutside = (e) => {
-        if (
-            (this.inputRef.current.contains(e.target) && !this.calendarRef.current) ||
-            !this.calendarRef.current.contains(e.target)
-        ) {
+    onKeyDown = (e) => {
+        if (!this.state.displayCalendar) return;
+        if (e.key === 'Escape') {
             this.close();
         }
-    };
 
-    onKeyDown = (e) => {
-        if (e.key === 'Escape') this.close();
+        if (e.key === 'Enter' && e.target === this.inputRef.current) {
+            this.close();
+        }
+
+        if (e.key === 'Tab') {
+            if (!this.calendarRef.current) return;
+            const focusableElements = this.calendarRef.current.querySelectorAll(
+                'button, [tabindex]:not([tabindex="-1"]), input, select, textarea, a[href]'
+            );
+            if (!focusableElements.length) return;
+
+            const firstFocusableElement = focusableElements[0];
+            const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+            if (e.target === this.inputRef.current) {
+                e.preventDefault();
+                if (e.shiftKey) {
+                    lastFocusableElement.focus();
+                } else {
+                    firstFocusableElement.focus();
+                }
+            }
+
+            if (e.target === firstFocusableElement && e.shiftKey) {
+                e.preventDefault();
+                this.inputRef.current.focus();
+            }
+            if (e.target === lastFocusableElement && !e.shiftKey) {
+                e.preventDefault();
+                this.inputRef.current.focus();
+            }
+        }
     };
 
     targetHasExcludedClass(target, excludedClasses = []) {
